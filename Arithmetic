@@ -1,0 +1,60 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+public class Main {
+    public Main() {
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Возраст по убыванию");
+        int vasyaAge = 32;
+        int mashaAge = 14;
+        int mishaAge = 40;
+        System.out.println();
+        System.out.print("Minimal age: ");
+        if (vasyaAge <= mashaAge && vasyaAge <= mishaAge) {
+            System.out.print(vasyaAge);
+        } else if (mashaAge <= vasyaAge && mashaAge <= mishaAge) {
+            System.out.print(mashaAge);
+        } else {
+            System.out.print(mishaAge);
+        }
+
+        System.out.println();
+        System.out.print("Middle age: ");
+        if ((vasyaAge > mashaAge || vasyaAge < mishaAge) && (vasyaAge < mashaAge || vasyaAge > mishaAge)) {
+            if ((mashaAge > vasyaAge || mashaAge < mishaAge) && (mashaAge < vasyaAge || mashaAge > mishaAge)) {
+                System.out.print(mishaAge);
+            } else {
+                System.out.print(mashaAge);
+            }
+        } else {
+            System.out.print(vasyaAge);
+        }
+
+        System.out.println();
+        System.out.print("Maximum age: ");
+        if (vasyaAge >= mashaAge && vasyaAge >= mishaAge) {
+            System.out.print(vasyaAge);
+        } else if (mashaAge >= vasyaAge && mashaAge >= mishaAge) {
+            System.out.print(mashaAge);
+        } else {
+            System.out.print(mishaAge);
+        }
+
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Arithmetic arithmetic = new Arithmetic(14, 88);
+
+        System.out.println("Сумма: " + arithmetic.getSum());
+        System.out.println("Произведение: " + arithmetic.getMulti());
+        System.out.println("Максимум: " + arithmetic.getMax());
+        System.out.println("Минимум: " + arithmetic.getMin());
+
+    }
+}
