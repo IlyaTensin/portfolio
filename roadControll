@@ -1,0 +1,85 @@
+import core.*;
+import core.Camera;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public class RoadController {
+        private static double passengerCarMaxWeight = 3500.0; // kg переменая максимального веса грузы
+        private static int passengerCarMaxHeight = 2000; // mm переменная максимальной высоты лекгового автомобиля
+        private static int controllerMaxHeight = 4000; // mm переменная максимальной высоты грузового транспорта
+
+        private static int passengerCarPrice = 100; // RUB переменная сбора платы за легковой автомобиль
+        private static int cargoCarPrice = 250; // RUB цена грузового автомобиля
+        private static int vehicleAdditionalPrice = 200; // RUB дополнительная плата с авто
+
+        public static void main(String[] args) {
+            System.out.println("Сколько автомобилей сгенерировать?");
+
+            Scanner scanner = new Scanner(System.in);
+            int carsCount = scanner.nextInt();   // сканер для подсчёта авто
+
+            for (int i = 0; i < carsCount; i++) { // число сгенерированных автомобилей
+                Car car = Camera.getNextCar();
+                System.out.println(car);
+
+                //Пропускаем автомобили спецтранспорта бесплатно
+                if (car.isSpecial) { //переменная которая пропускает авто спец.транспорта
+                    openWay();
+                    continue;
+                }
+
+                //Проверяем высоту и массу автомобиля, вычисляем стоимость проезда
+                int price = calculatePrice(car); //  проверка высоты и массы авто
+                if (price == -1) {
+                    continue;
+                }
+
+                System.out.println("Общая сумма к оплате: " + price + " руб.");
+            }
+        }
+
+        /**
+         * Расчёт стоимости проезда исходя из массы и высоты
+         */
+        private static int calculatePrice(Car car) {
+            int carHeight = car.height; // проверка высоты
+            int price = 0;
+            if (carHeight > controllerMaxHeight) {
+                blockWay("высота вашего ТС превышает высоту пропускного пункта!");
+                return -1;
+            } else if (carHeight > passengerCarMaxHeight) {
+                double weight = car.weight; // проверка веса авто
+                //Грузовой автомобиль
+                if (weight > passengerCarMaxWeight) {
+                    price = passengerCarPrice;
+                    if (car.hasVehicle) {
+                        price = price + vehicleAdditionalPrice;
+                    }
+                }
+                //Легковой автомобиль
+                else {
+                    price = cargoCarPrice;
+                }
+            } else {
+                price = passengerCarPrice;
+            }
+            return price;
+        }
+
+        /**
+         * Открытие шлагбаума
+         */
+        private static void openWay() {
+            System.out.println("Шлагбаум открывается... Счастливого пути!");
+        }
+
+        /**
+         * Сообщение о невозможности проезда
+         */
+        private static void blockWay(String reason) {
+            System.out.println("Проезд невозможен: " + reason);
+        }
+    }
+}
